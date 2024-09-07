@@ -1,0 +1,135 @@
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff8e1;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 350px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ffeb3b, #ffcc00);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, transparent 60%, #ffeb3b 60%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #000000;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+        p {
+            font-size: 14px;
+            color: #888888;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #888888;
+        }
+        .input-group .forgot {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #ffcc00;
+            cursor: pointer;
+        }
+        .login-btn {
+            background: linear-gradient(135deg, #ffeb3b, #ffcc00);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .login-btn i {
+            margin-left: 10px;
+        }
+        .signup {
+            font-size: 12px;
+            color: #888888;
+        }
+        .signup a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome</h1>
+        <h2>Login</h2>
+        <p>Please sign in to continue</p>
+        <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="text" placeholder="       user123@gmail.com">
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="       Password">
+            <span class="forgot">Forgot?</span>
+        </div>
+        <button class="login-btn">LOGIN <i class="fas fa-arrow-right"></i></button>
+        <div class="signup">
+            Don't have an account? <a href="SignUp.html">Sign up</a>
+        </div>
+    </div>
+</body>
+</html>
