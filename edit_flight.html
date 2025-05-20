@@ -1,0 +1,45 @@
+<!-- templates/edit_flight.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Edit Flight {{ flight.id }}</h1>
+    
+    <form method="POST" action="/admin/update_flight/{{ flight.id }}">
+        <div class="form-group">
+            <label for="origin">Origin:</label>
+            <input type="text" class="form-control" id="origin" name="origin" value="{{ flight.origin }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <input type="text" class="form-control" id="destination" name="destination" value="{{ flight.destination }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="departure_time">Departure Time:</label>
+            <input type="datetime-local" class="form-control" id="departure_time" name="departure_time" 
+                   value="{{ flight.departure_time.strftime('%Y-%m-%dT%H:%M') }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="arrival_time">Arrival Time:</label>
+            <input type="datetime-local" class="form-control" id="arrival_time" name="arrival_time" 
+                   value="{{ flight.arrival_time.strftime('%Y-%m-%dT%H:%M') }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" id="status" name="status">
+                <option value="Scheduled" {% if flight.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                <option value="Delayed" {% if flight.status == 'Delayed' %}selected{% endif %}>Delayed</option>
+                <option value="Cancelled" {% if flight.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                <option value="Completed" {% if flight.status == 'Completed' %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Flight</button>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

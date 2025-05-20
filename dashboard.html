@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ name }}</h2>
+<p class="lead">Manage your flights and bookings</p>
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Your Upcoming Bookings</h5>
+            </div>
+            <div class="card-body">
+                {% if bookings %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Flight</th>
+                                    <th>Route</th>
+                                    <th>Date</th>
+                                    <th>Passengers</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in bookings %}
+                                <tr>
+                                    <td>{{ booking.flight_number }}</td>
+                                    <td>{{ booking.departure_city }} → {{ booking.arrival_city }}</td>
+                                    <td>{{ booking.departure_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>{{ booking.passengers }}</td>
+                                    <td>${{ "%.2f"|format(booking.total_price) }}</td>
+                                    <td>
+                                        <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p>You have no upcoming bookings.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('search_flights') }}" class="btn btn-primary btn-block mb-3">Book a Flight</a>
+                <a href="{{ url_for('profile') }}" class="btn btn-secondary btn-block mb-3">View Profile</a>
+            </div>
+        </div>
+
+        {% if stats %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Booking Summary</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Total Bookings:</strong> {{ stats.total_bookings }}</p>
+                <p><strong>Total Amount Spent:</strong> ₹{{ "%.2f"|format(stats.total_spent or 0) }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Available Flights</h5>
+            </div>
+            <div class="card-body">
+                {% if flights %}
+                    {% for flight in flights %}
+                    <div class="card-flight-card mb-2">
+                        <div class="card-body-inner">
+                            <h6>{{ flight.airline }} - {{ flight.flight_number }}</h6>
+                            <p class="mb-1">{{ flight.departure_city }} → {{ flight.arrival_city }}</p>
+                            <p class="mb-1"><small>{{ flight.departure_time.strftime('%b %d, %H:%M') }} - {{ flight.arrival_time.strftime('%H:%M') }}</small></p>
+                            <p class="mb-1">${{ "%.2f"|format(flight.price) }}</p>
+                            <a href="{{ url_for('book_flight', flight_id=flight.id) }}" class="btn btn-sm btn-success">Book Now</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No available flights at the moment.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-flight-card {
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        display: flex;
+    }
+    .card-body-inner {
+        flex: 1;
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 1rem;
+        border: none;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Register{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-user-shield me-2"></i>Admin Registration</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin_register') }}" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Profile Picture</label>
+                        <input class="form-control" type="file" name="profile_image" accept="image/*" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Admin Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Create Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="landline" class="form-label">Landline</label>
+                        <input type="tel" class="form-control" id="landline" name="landline">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pincode" class="form-label">Pincode</label>
+                        <input type="text" class="form-control" id="pincode" name="pincode">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control" id="state" name="state">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="country" name="country" value="India" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Register as Admin</button>
+
+                    <p class="mt-3 text-center">
+                        Already registered? <a href="{{ url_for('admin_login') }}">Login here</a>
+                    </p>
+
+                    {% if msg %}
+                    <div class="alert alert-info mt-3">{{ msg }}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .profile-header {
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eaeaea;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #dfe6e9;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+    }
+    
+    textarea.form-control {
+        min-height: 100px;
+    }
+    
+    .btn-primary {
+        background-color: #2980b9;
+        border-color: #2980b9;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #3498db;
+        border-color: #3498db;
+        transform: translateY(-1px);
+    }
+    
+    .btn-secondary {
+        background-color: #95a5a6;
+        border-color: #95a5a6;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #7f8c8d;
+        border-color: #7f8c8d;
+        transform: translateY(-1px);
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    /* Airline-themed accent colors */
+    .input-accent {
+        border-left: 4px solid #3498db;
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: #e74c3c;
+    }
+</style>
+
+<div class="profile-container">
+    <h2 class="profile-header">Update Your Profile</h2>
+    <form method="POST" action="/update_profile">
+        <div class="mb-4">
+            <label for="name" class="form-label required-field">Full Name</label>
+            <input type="text" class="form-control input-accent" id="name" name="name" value="{{ user.name }}" required>
+        </div>
+        
+        <div class="mb-4">
+            <label for="email" class="form-label required-field">Email address</label>
+            <input type="email" class="form-control input-accent" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="phone" class="form-label">Mobile Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone if user.phone }}" placeholder="+91 XXXXXXXXXX">
+            </div>
+            <div class="col-md-6">
+                <label for="landline" class="form-label">Landline Number</label>
+                <input type="tel" class="form-control" id="landline" name="landline" value="{{ user.landline if user.landline }}" placeholder="With area code">
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" name="address" placeholder="Your complete address">{{ user.address if user.address }}</textarea>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input type="text" class="form-control" id="pincode" name="pincode" value="{{ user.pincode if user.pincode }}" placeholder="6 digits">
+            </div>
+            <div class="col-md-5">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="{{ user.city if user.city }}">
+            </div>
+            <div class="col-md-4">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" name="state" value="{{ user.state if user.state }}">
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="country" value="{{ user.country if user.country else 'India' }}">
+        </div>
+        
+        <div class="action-buttons">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>Save Changes
+            </button>
+            <a href="/profile" class="btn btn-secondary">
+                <i class="fas fa-times me-2"></i>Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Font Awesome for icons (add to base.html) -->
+<script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+{% endblock %}

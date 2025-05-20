@@ -1,0 +1,270 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 30px;
+	background-color: #ffffff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.brand .logo {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.brand .brand-name {
+	font-size: 24px;
+	font-weight: 700;
+	color: #007bff;
+}
+
+.nav-menu {
+	display: flex;
+	list-style: none;
+	gap: 30px;
+	margin: 0;
+	padding: 0;
+}
+
+.nav-link {
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: 500;
+	color: #333;
+	position: relative;
+	transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+	color: #007bff;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -5px;
+	width: 0%;
+	height: 2px;
+	background-color: #007bff;
+	transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+	width: 100%;
+}
+
+/* profile logo  */
+.user-icons {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.profile-logo,
+.login-logo {
+	width: 30px;
+	height: 30px;
+	transition: transform 0.3s ease;
+}
+
+.profile-logo:hover,
+.login-logo:hover {
+	transform: scale(1.1);
+}
+/* profile section  */
+
+
+/* login logo */
+.login-icon .login-logo {
+	width: 30px;
+	height: 30px;
+	transition: transform 0.3s ease;
+}
+
+.login-icon .login-logo:hover {
+	transform: scale(1.1);
+}
+
+
+
+
+.flight-card {
+	transition: transform 0.3s, box-shadow 0.3s;
+	margin-bottom: 20px;
+	border-radius: 15px;
+	overflow: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.flight-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+footer {
+	background-color: #343a40;
+	color: white;
+	padding: 20px 0;
+	font-size: 0.9rem;
+}
+
+/* start hero section  */
+.hero-section {
+	position: relative;
+	background: url('https://images.unsplash.com/photo-1542144582-b0d0e43f5917?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+	height: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	margin: 2rem 1rem;
+	overflow: hidden;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 2rem;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hero-content {
+	max-width: 700px;
+}
+
+/* feature start  */
+.feature-section {
+	background: linear-gradient(90deg, rgb(237, 237, 243), rgb(207, 207, 236), rgb(188, 188, 240));
+	padding: 4rem 2rem;
+	text-align: center;
+}
+
+.feature-container {
+	display: flex;
+	justify-content: space-around;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.feature {
+	width: 30%;
+	padding: 1rem;
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+	font-size: 2.5rem;
+	color: #007bff;
+	margin-bottom: 1rem;
+}
+
+.feature h3 {
+	font-size: 1.5rem;
+	color: #333333;
+	margin-bottom: 1rem;
+}
+
+.feature p {
+	font-size: 1rem;
+	color: #666666;
+	line-height: 1.5;
+}
+
+/* Admin specific styles */
+.admin-container {
+    padding: 20px;
+}
+
+.admin-nav {
+    background: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.admin-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.admin-nav li {
+    margin-right: 20px;
+}
+
+.admin-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.admin-nav a:hover {
+    color: #007bff;
+}
+
+.admin-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.flight-cancellation {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}

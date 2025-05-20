@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Upload Profile Picture</h2>
+
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="image" class="form-label">Choose an Image (PNG, JPG, JPEG, GIF):</label>
+            <input class="form-control" type="file" name="image" id="image" accept="image/*" required>
+            <div class="form-text">Maximum file size: 2MB</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+        <a href="{{ url_for('profile') }}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+    
+    <!-- Debug information (remove in production) -->
+    {% if debug_info %}
+    <div class="mt-4 p-3 bg-light rounded">
+        <h5>Debug Information:</h5>
+        <pre>{{ debug_info }}</pre>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Client-side file validation
+    document.getElementById('image').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Check file size (2MB max)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('File size exceeds 2MB limit');
+                e.target.value = '';
+            }
+            
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                alert('Only JPG, PNG, and GIF files are allowed');
+                e.target.value = '';
+            }
+        }
+    });
+</script>
+{% endblock %}

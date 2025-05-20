@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Airline Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-header h2 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs .nav-link {
+            color: #555;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 5px;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: #007bff;
+            background-color: rgba(0, 123, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .profile-table th {
+            background-color: #f1f4f9;
+            font-weight: 500;
+            color: #333;
+            width: 30%;
+            padding: 15px;
+        }
+
+        .profile-table td {
+            background-color: #ffffff;
+            color: #555;
+            padding: 15px;
+        }
+
+        .profile-table tr {
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .profile-picture-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #007bff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .upload-btn input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background-color: #495057;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px;
+                margin: 20px 15px;
+            }
+
+            .profile-table th,
+            .profile-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body> 
+    <nav class="navbar navbar-expand-lg bg-light shadow-sm px-4 py-2 sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyTravel Logo" width="65" height="65" class="me-2">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    {% if 'loggedin' in session %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('search_flights') }}">Book Flights</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    {% if 'loggedin' in session %}
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user.image_path %}
+                            <img src="{{ url_for('static', filename=user.image_path) }}" width="40" height="40" class="rounded-circle me-2">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='images/default-profile.png') }}" width="40" height="40" class="rounded-circle me-2">
+                            {% endif %}
+                            <span class="d-none d-sm-inline">{{ user.name }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+                            <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sign out</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container profile-container">
+        <div class="profile-header">
+            <h2>My Account</h2>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/profile">Profile</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="/bookings">Booked Tickets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cancellations">Cancellations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/payment">Additional Payment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bank">Bank Details</a>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="profile-picture-container">
+            {% if user.image_path %}
+                <img src="{{ url_for('static', filename=user.image_path) }}" class="profile-picture" alt="Profile Picture">
+                <th>Name:</th>
+                <td>{{ user.name }}</td>
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default-profile.png') }}" class="profile-picture" alt="Default Profile Picture">
+            {% endif %}
+            <a href="{{ url_for('upload') }}" class="btn btn-sm btn-outline-primary upload-btn">
+                <i class="fas fa-camera me-2"></i>Change Photo
+                <input type="file" id="profile-upload" style="display: none;">
+            </a>
+        </div>
+
+        <table class="table profile-table">
+            <tbody>
+                <tr>
+                    <th>User ID:</th>
+                    <td>{{ user.user_id if user.user_id else 'user' + user.id|string }}</td>
+                </tr>
+                <tr>
+                    <th>Email ID:</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ user.name }}</td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td>{{ user.address if user.address else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>Pincode:</th>
+                    <td>{{ user.pincode if user.pincode else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>City:</th>
+                    <td>{{ user.city if user.city else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>State:</th>
+                    <td>{{ user.state if user.state else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>Country:</th>
+                    <td>{{ user.country if user.country else 'India' }}</td>
+                </tr>
+                <tr>
+                    <th>Mobile No:</th>
+                    <td>{{ user.phone if user.phone else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>Landline No:</th>
+                    <td>{{ user.landline if user.landline else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>Member Since:</th>
+                    <td>{{ user.created_at.strftime('%B %d, %Y') }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('update_profile') }}" class="btn btn-primary">
+                <i class="fas fa-user-edit me-2"></i>Edit Profile
+            </a>
+            <a href="{{ url_for('change_password') }}" class="btn btn-secondary">
+                <i class="fas fa-key me-2"></i>Change Password
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-submit when file is selected
+        document.getElementById('profile-upload').addEventListener('change', function() {
+            if(this.files.length > 0) {
+                // You could add AJAX upload here or let it redirect to upload route
+                window.location.href = "{{ url_for('upload') }}";
+            }
+        });
+    </script>
+</body>
+
+</html>

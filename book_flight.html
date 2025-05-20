@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Book Flight{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Confirm Your Booking</h4>
+                </div>
+                
+                <div class="card-body">
+                    {% if flight %}
+                    <div class="flight-info mb-4 p-3 border rounded">
+                        <h5 class="text-center">{{ flight.airline }} - Flight {{ flight.flight_number }}</h5>
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Departure:</strong></p>
+                                <p>{{ flight.departure_city }}</p>
+                                <p>{{ flight.departure_time.strftime('%a, %b %d, %Y at %H:%M') }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Arrival:</strong></p>
+                                <p>{{ flight.arrival_city }}</p>
+                                <p>{{ flight.arrival_time.strftime('%a, %b %d, %Y at %H:%M') }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <p><strong>Duration:</strong> {{ flight.duration_minutes|duration }}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <p><strong>Price:</strong> ${{ "%.2f"|format(flight.price) }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('book_flight', flight_id=flight.id) }}">
+                        <div class="form-group">
+                            <label for="passengers">Number of Passengers</label>
+                            <input type="number" class="form-control" id="passengers" name="passengers" 
+                                   min="1" max="{{ flight.available_seats }}" value="1" required>
+                            <small class="form-text text-muted">
+                                Maximum {{ flight.available_seats }} seats available
+                            </small>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <i class="fas fa-check-circle"></i> Confirm Booking
+                            </button>
+                            <a href="{{ url_for('search_flights') }}" class="btn btn-outline-secondary btn-block mt-2">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> Flight information not available.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

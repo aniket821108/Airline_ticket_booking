@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Search Results{% endblock %}
+
+{% block content %}
+<h3>Available Flights</h3>
+
+{% if flights %}
+<div class="row-outer">
+    <div class="row">
+        {% for flight in flights %}
+        <div class="col-md-6">
+            <div class="card flight-card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>{{ flight.airline }} - {{ flight.flight_number }}</h5>
+                            <p class="mb-1"><strong>{{ flight.departure_city }} → {{ flight.arrival_city }}</strong></p>
+                            <p class="mb-1">
+                                {{ flight.departure_time.strftime('%a, %b %d, %H:%M') }} -
+                                {{ flight.arrival_time.strftime('%H:%M') }}
+                            </p>
+                            <!-- Change this line in search_results.html -->
+                            <p class="mb-1">Duration: {{ flight.duration_minutes|duration }}</p>
+                            <p class="mb-1">Available seats: {{ flight.available_seats }}</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <h4>${{ "%.2f"|format(flight.price) }}</h4>
+                            <a href="{{ url_for('book_flight', flight_id=flight.id) }}" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('search_flights') }}" class="btn btn-secondary">New Search</a>
+
+</div>
+{% else %}
+<div class="alert alert-info">
+    No flights found matching your criteria. Please try different search parameters.
+</div>
+{% endif %}
+
+<style>
+    .flight-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .flight-card:hover {
+        transform: scale(1.02);
+    }
+
+    .flight-card h5 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .flight-card p {
+        margin-bottom: 0.25rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .row-outer{
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+</style>
+{% endblock %}
